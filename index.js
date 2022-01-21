@@ -35,5 +35,7 @@ nextISSTimesForMyLocation((error, passTimes) => {
     return console.log("It didn't work!", error);
   }
   // success, print out the deets!
-  console.log(passTimes);
+  for (obj of passTimes) {
+    console.log(`Next pass at ${Date(obj.risetime)} for ${obj.duration} seconds!`)
+  };
 });

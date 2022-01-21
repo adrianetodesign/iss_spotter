@@ -83,7 +83,25 @@ const fetchISSFlyOverTimes = function(coords, callback) {
  *     [ { risetime: <number>, duration: <number> }, ... ]
  */ 
  const nextISSTimesForMyLocation = function(callback) {
-
+   fetchMyIP((error, ip) => {
+     if (error) {
+       callback(error, null);
+       return;
+     }
+     fetchCoordsByIP(ip, (error, coords) => {
+       if (error) {
+         callback(error, null);
+         return;
+       }
+       fetchISSFlyOverTimes(coords, (error, issFlight) => {
+         if (error) {
+           callback(error, null);
+           return;
+         }
+         callback(null, issFlight.response);
+       });
+     });
+   });
 }
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
